@@ -2,6 +2,11 @@ package com.mycompany.kurs;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -9,14 +14,22 @@ import java.util.logging.Logger;
 
 public class TextInterface {
     
-    public static void userInteraction(Bathroom test){
+    public static void userInteraction(Bathroom test) throws IOException {
         Scanner sc = new Scanner(System.in);
         System.out.println("Нажмите любую клавишу, чтобы продолжить, либо введите 'exit' чтобы выйти. Нажмите Enter, чтобы подтвердить действие.");
-        String answer1, answer2;
+        String answer1,answer2;
+        int answer3;
         answer1 = sc.nextLine();
         try {
+            System.out.println("Если вы желаете продложить строить свою системы нажмите 1, иначе вы начнете с начала:");
+            answer3 = sc.nextInt();
+            if(answer3 == 1){
+                System.out.println("Введите путь для загрузки файла");
+                answer2 = sc.next();
+                test.loadPlan(answer2);
+            }
             while (!answer1.equals("exit")) {
-                System.out.println("Введите номер операции, которую вы хотите провести:\n 1)Добавить \n 2)Удалить \n 3)Найти \n 4)Соединить \n 5)Отсоединить \n 6)Сохранить \n 7)Загрузить \n 8)Состнояние системы:");
+                System.out.println("Введите номер операции, которую вы хотите провести:\n 1)Добавить \n 2)Удалить \n 3)Найти \n 4)Соединить \n 5)Отсоединить \n 6)Сохранить \n 7)Загрузить \n 8)Состнояние системы:\n 9)Выйти и сохранить данные о системе:\n10)Выйти без сохранения:");
                 answer1 = sc.next();
                 if(answer1.equals("exit")) continue;
                 switch (answer1) {
@@ -33,7 +46,7 @@ public class TextInterface {
                         disconnect(sc, test);
                         break;
                     case ("6"):
-                        System.out.println("Введите путь для сохранения файла");
+                        System.out.println("Введите название для сохранения файла");
                         answer2 = sc.next();
                         test.savePlan(answer2);
                         break;
@@ -49,8 +62,15 @@ public class TextInterface {
                         System.out.println(gson.toJson(test));
                         break;
                     case ("9"): {
-
-                    break;
+                        System.out.println("Введите название для сохранения файла");
+                        answer2 = sc.next();
+                        test.savePlan(answer2);
+                        System.exit(0);
+                        break;
+                        }
+                    case("10"):{
+                        System.out.println("До свидания.");
+                        System.exit(0);
                     }
                     default:
                         search(sc, test);

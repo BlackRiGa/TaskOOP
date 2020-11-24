@@ -1,17 +1,13 @@
 package com.mycompany.kurs;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import java.io.IOException;
 
-import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import static com.mycompany.kurs.Bathroom.getInstance;
 import static com.mycompany.kurs.TextInterface.userInteraction;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Bathroom test = getInstance();
         userInteraction(test);
     }

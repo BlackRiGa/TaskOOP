@@ -48,7 +48,6 @@ public class Bathroom implements Serializable{
     public void addTube(String name, int length, int diameter, Type type) throws Exception {
             Tube tube = new Tube(name, (new TubeBuilder()).changeLength(length).changeDiameter(diameter).changeType(type));
             tubes.add(tube);
-
     }
     
     public Tube searchTube(String name) throws Exception {
@@ -162,26 +161,9 @@ public class Bathroom implements Serializable{
             throw new Exception("Something went wrong");
         }*/
     }
-    
-//    public void savePlan(String path) throws IOException {
-//        FileOutputStream outputStream = new FileOutputStream(path);
-//        try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream)) {
-//            objectOutputStream.writeObject(this);
-//        }
-//    }
-//    
-//    public void loadPlan(String path) throws IOException, ClassNotFoundException {
-//        FileInputStream fileInputStream = new FileInputStream(path);
-//        ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-//        Bathroom curr = (Bathroom) objectInputStream.readObject();
-//        this.tubes = curr.tubes;
-//        this.fittings = curr.fittings;
-//        this.waterConsumers = curr.waterConsumers;
-//        this.waterSources = curr.waterSources;
-//        this.drains = curr.drains;
-//    }
-    
-    public void savePlan(String path) throws IOException {//D:\save.json
+
+
+    public void savePlan(String path) throws IOException {
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
         String text = gson.toJson(this);
@@ -193,24 +175,12 @@ public class Bathroom implements Serializable{
     }
     
     public void loadPlan(String path) throws IOException, ClassNotFoundException {
-//        try (FileReader reader = new FileReader("notes3.txt")) {
-//            // читаем посимвольно
-//            int c;
-//            while ((c = reader.read()) != -1) {
-//                System.out.print((char) c);
-//            }
-//        } catch (IOException ex) {
-//            System.out.println("Load error");
-//        }
-
         String text = "";
         Scanner in = new Scanner(new File(path));
         while(in.hasNextLine()){
             text += in.nextLine();
-            //in.close();
         }
         in.close();
-
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
         Bathroom curr = gson.fromJson(text, Bathroom.class);
@@ -219,28 +189,5 @@ public class Bathroom implements Serializable{
         this.waterConsumers = curr.waterConsumers;
         this.waterSources = curr.waterSources;
         this.drains = curr.drains;
-        this.links = curr.links;
-        
-//        FileInputStream fileInputStream = new FileInputStream(path);
-//        ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-//        Bathroom curr = (Bathroom) objectInputStream.readObject();
-//        this.tubes = curr.tubes;
-//        this.fittings = curr.fittings;
-//        this.waterConsumers = curr.waterConsumers;
-//        this.waterSources = curr.waterSources;
-//        this.drains = curr.drains;
-    }
-    
-//                        case ("8"):
-//                        GsonBuilder builder = new GsonBuilder();
-//                        Gson gson = builder.create();
-//                        System.out.println(gson.toJson(test));
-//                        break;
-//                    case ("9"): {
-//                        //String json = "{\"tubes\":[{\"type\":\"SEWER\",\"length\":10,\"diameter\":10,\"name\":\"Хуй\"}],\"fittings\":[{\"type\":\"SEWER\",\"name\":\"Жопа\"}],\"waterConsumers\":[],\"waterSources\":[],\"drains\":[],\"links\":{\"links\":[{\"What\":\"Хуй\",\"WithWhom\":\"Жопа\",\"LinkType\":\"OUT_TUBE_IN_FITTING\"}]}}";
-//                        builder = new GsonBuilder();
-//                        gson = builder.create();
-//                        test = gson.fromJson(json, Bathroom.class);
-//                        break;
-//                    }
+        this.links = curr.links; }
 }
