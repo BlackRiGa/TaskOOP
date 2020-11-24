@@ -49,25 +49,25 @@ public class Bathroom implements Serializable{
             Tube tube = new Tube(name, (new TubeBuilder()).changeLength(length).changeDiameter(diameter).changeType(type));
             tubes.add(tube);
     }
+
+    public Tube getTube(int index){
+        return tubes.get(index);
+    }
+    public boolean tubeisEmpty(){
+        return tubes.isEmpty();
+    }
     
-    public Tube searchTube(String name) throws Exception {
-        return tubes.stream().findFirst().filter(i -> i.name.equals(name)).orElseThrow(() -> new Exception("No such pipe"));
+    public Tube getTube(String name) throws Exception {
+        for (Tube tube : tubes) {
+            if (tube.getName()==name) return tube;
+        }
+        return null;
+        //return tubes.stream().findFirst().filter(i -> i.getName().equals(name)).orElseThrow(() -> new Exception("No such pipe"));
         
     }
 
     public void deleteTube(String name) throws Exception {
-        tubes.remove(this.searchTube(name));
-        /*try {
-            if (this.searchTube(name).outp != null) {
-                this.searchTube(name).disconnectFitting();
-            }
-            if (this.searchTube(name).inp != null) {
-                this.searchTube(name).inp.disconnectTube(this.searchTube(name));
-            }
-            tubes.remove(this.searchTube(name));
-        } catch (Exception ex) {
-            throw new Exception("Something went wrong");//для проверки
-        }*/
+        tubes.remove(this.getTube(name));
     }
 
     public void addFitting(String name, int inputs, int outputs, Type type) throws Exception {
@@ -83,17 +83,11 @@ public class Bathroom implements Serializable{
     }
 
     public Fitting searchFitting(String name) throws Exception {
-        return fittings.stream().findFirst().filter(i -> i.name.equals(name)).orElseThrow(() -> new Exception("No such fitting"));
+        return fittings.stream().findFirst().filter(i -> i.getName().equals(name)).orElseThrow(() -> new Exception("No such fitting"));
     }
 
     public void deleteFitting(String name) throws Exception {//проверить что будет с соседними трубами
         fittings.remove(this.searchFitting(name));
-        /*try {
-            this.searchFitting(name).disconnectAll();
-            fittings.remove(this.searchFitting(name));
-        } catch (Exception ex) {
-            throw new Exception("Something went wrong");//для проверки
-        }*/
     }
 
     public void addWaterConsumer(String name, int length, int diameter) throws Exception {
@@ -102,22 +96,12 @@ public class Bathroom implements Serializable{
     }
 
     public WaterConsumer searchWaterConsumer(String name) throws Exception {
-        return waterConsumers.stream().findFirst().filter(i -> i.name.equals(name)).orElseThrow(() -> new Exception("No such water consumer"));
+        return waterConsumers.stream().findFirst().filter(i -> i.getName().equals(name)).orElseThrow(() -> new Exception("No such water consumer"));
     }
 
-    public void deleteWaterConsumer(String name) throws Exception {//проверить что будет с соседними трубами
+    public void deleteWaterConsumer(String name) throws Exception {
         waterConsumers.remove(this.searchWaterConsumer(name));
-        /*try {
-            if (this.searchWaterConsumer(name).outp != null) {
-                this.searchWaterConsumer(name).disconnectSewerFitting();
-            }
-            if (this.searchWaterConsumer(name).inp != null) {
-                this.searchWaterConsumer(name).inp.disconnectWaterConsumer();
-            }
-            waterConsumers.remove(this.searchWaterConsumer(name));
-        } catch (Exception ex) {
-            throw new Exception("Something went wrong");//для проверки
-        }*/
+
     }
 
     public void addWaterSource(String name) throws Exception {
@@ -126,19 +110,12 @@ public class Bathroom implements Serializable{
     }
     
     public WaterSource searchWaterSource(String name) throws Exception {
-        return waterSources.stream().filter(i -> i.name.equals(name)).findFirst().orElseThrow(() -> new Exception("No such water source"));
+        return waterSources.stream().filter(i -> i.getName().equals(name)).findFirst().orElseThrow(() -> new Exception("No such water source"));
     }
     
     public void deleteWaterSource(String name) throws Exception {
         waterSources.remove(this.searchWaterSource(name));
-        /*try {
-            if (this.searchWaterSource(name).outp != null) {
-                this.searchWaterSource(name).disconnectPlumbingFitting();
-            }
-            waterSources.remove(this.searchWaterSource(name));
-        } catch (Exception ex) {
-            throw new Exception("Something went wrong");//для проверки
-        }*/
+
     }
     
     public void addDrain(String name) throws Exception {
@@ -147,19 +124,11 @@ public class Bathroom implements Serializable{
     }
     
     public Drain searchDrain(String name) throws Exception {
-        return drains.stream().findFirst().filter(i -> i.name.equals(name)).orElseThrow(() -> new Exception("No such drain"));
+        return drains.stream().findFirst().filter(i -> i.getName().equals(name)).orElseThrow(() -> new Exception("No such drain"));
     }
     
     public void deleteDrain(String name) throws Exception {
         drains.remove(this.searchDrain(name));
-        /*try {
-            if (this.searchDrain(name).inp != null) {
-                this.searchDrain(name).inp.disconnectDrain();
-            }
-            drains.remove(this.searchDrain(name));
-        } catch (Exception ex) {
-            throw new Exception("Something went wrong");
-        }*/
     }
 
 

@@ -3,10 +3,7 @@ package com.mycompany.kurs;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.Writer;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -186,7 +183,7 @@ public class TextInterface {
                 name = sc.next();
                 System.out.println("Введите имя присоединяемого фитинга");
                 name2 = sc.next();
-                Tube tube = test.searchTube(name);
+                Tube tube = test.getTube(name);
                 Fitting fitting = test.searchFitting(name2);
                 if(fitting.type == Type.SEWER){
                     test.links.connect(tube, fitting, LinkType.OUT_TUBE_IN_FITTING);
@@ -233,8 +230,8 @@ public class TextInterface {
                         System.out.println("Введите имя трубы");
                         name2 = sc.next();
                         Fitting fitting = test.searchFitting(name);
-                        Tube tube = test.searchTube(name2);
-                        if(fitting.type == tube.type){
+                        Tube tube = test.getTube(name2);
+                        if(fitting.type == tube.getType()){
                             test.links.connect(fitting, tube, LinkType.OUT_FITTING_IN_TUBE);
                         }else{
                             System.out.println("1.2.1");
@@ -281,7 +278,7 @@ public class TextInterface {
                 name = sc.next();
                 System.out.println("Введите имя фитинга");
                 name2 = sc.next();
-                Tube tube = test.searchTube(name);
+                Tube tube = test.getTube(name);
                 fitting = test.searchFitting(name2);
                 test.links.disconnect(tube, fitting, LinkType.OUT_TUBE_IN_FITTING);
                 break;
@@ -295,7 +292,7 @@ public class TextInterface {
                     case ("1"):
                         System.out.println("Введите имя трубы");
                         name2 = sc.next();
-                        test.links.disconnect(fitting, test.searchTube(name2), LinkType.OUT_FITTING_IN_TUBE);
+                        test.links.disconnect(fitting, test.getTube(name2), LinkType.OUT_FITTING_IN_TUBE);
                         break;
                     case ("2"):
                         System.out.println("Потребителя воды");
@@ -349,8 +346,8 @@ public class TextInterface {
             case ("1"):
                 System.out.println("Введите имя трубы");
                 name = sc.next();
-                Tube desiredT = test.searchTube(name);
-                System.out.println(" Длина: " + desiredT.length + "\n Ширина: " + desiredT.diameter + "\n Тип: " + desiredT.type);
+                Tube desiredT = test.getTube(name);
+                System.out.println(" Длина: " + desiredT.getLength() + "\n Ширина: " + desiredT.getDiameter() + "\n Тип: " + desiredT.getType());
                 break;
             case ("2"):
                 System.out.println("Введите имя фитинга");
@@ -368,13 +365,13 @@ public class TextInterface {
                 System.out.println("Введите имя источника");
                 name = sc.next();
                 WaterSource desiredS = test.searchWaterSource(name);
-                System.out.println(" Имя: " + desiredS.name);
+                System.out.println(" Имя: " + desiredS.getName());
                 break;
             default:
                 System.out.println("Введите имя слива");
                 name = sc.next();
                 Drain desiredD = test.searchDrain(name);
-                System.out.println(" Имя: " + desiredD.name);
+                System.out.println(" Имя: " + desiredD.getName());
                 break;
         }
     }
